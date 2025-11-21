@@ -23,4 +23,10 @@ public class Task {
     private User user;
 
     public Task() {}
+
+    public Task(String title, String description, User user) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
+    }
 }
