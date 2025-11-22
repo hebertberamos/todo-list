@@ -8,6 +8,10 @@ import com.personal.todolist.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +20,18 @@ public class TaskService {
     private final TaskRepository repository;
     private final UserRepository userRepository;
 
+    // Get all tasks
+    public List<TaskDTO> getAll() {
+        List<Task> tasks = repository.findAll();
+        List<TaskDTO> dtos =  new ArrayList<>();
+
+        for(Task task : tasks) {
+            TaskDTO dto = new TaskDTO(task);
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
 
     // Add task
     public TaskDTO addNewTask(TaskDTO requestBody) {
