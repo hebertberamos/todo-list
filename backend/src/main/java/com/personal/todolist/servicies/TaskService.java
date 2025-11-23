@@ -7,8 +7,8 @@ import com.personal.todolist.repositories.TaskRepository;
 import com.personal.todolist.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.ExpressionException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +53,30 @@ public class TaskService {
     }
 
     // Update task
+    public TaskDTO update(Long id, TaskDTO dto) {
+        try {
+            Task editTask = repository.findById(id).orElseThrow(() -> new Exception("Error to get task by this id"));
+
+            editTask.setTitle(dto.getTitle());
+            editTask.setDescription(dto.getDescription());
+
+            repository.save(editTask);
+
+            return new TaskDTO(editTask);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
 
     // Delete task
+    public ResponseEntity<?> delete(Long id) {
+        if(!repository.existsById(id)){
+            return ResponseEntity.notFound().build();
+        }
+
+        repository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
