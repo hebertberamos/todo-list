@@ -1,8 +1,10 @@
 package com.personal.todolist.controllers;
 
+import ch.qos.logback.core.encoder.EchoEncoder;
 import com.personal.todolist.entitites.dtos.TaskDTO;
 import com.personal.todolist.servicies.TaskService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,6 +48,29 @@ public class TaskController {
             System.out.println(e);
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<TaskDTO> update(@PathVariable("id") Long id, @RequestBody TaskDTO requestBody) {
+        TaskDTO retDto = null;
+
+        try {
+            retDto = service.update(id, requestBody);
+
+            if(retDto == null) {
+                return ResponseEntity.badRequest().build();
+            }
+
+            return ResponseEntity.ok(retDto);
+        } catch(Exception e) {
+            System.out.println(e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        return service.delete(id);
     }
 
 }

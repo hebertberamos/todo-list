@@ -12,8 +12,6 @@ const NewTaskForm = ({ onTaskCreated }) => {
         onTaskCreated(title, description);
         setTitle('');
         setDescription('');
-
-        console.log("adding new task");
     }
 
   return (
