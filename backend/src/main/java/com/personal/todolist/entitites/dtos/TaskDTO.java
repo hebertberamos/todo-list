@@ -9,12 +9,14 @@ import lombok.Setter;
 @Setter
 public class TaskDTO {
 
+    private Long id;
     private String title;
     private String description;
 
     public TaskDTO() {}
 
     public TaskDTO(Task task) {
+        this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
     }
