@@ -2,6 +2,7 @@ package com.personal.todolist.entitites.dtos;
 
 
 import com.personal.todolist.entitites.Task;
+import com.personal.todolist.entitites.enums.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ public class TaskDTO {
     private Long id;
     private String title;
     private String description;
+    private TaskStatus status;
 
     public TaskDTO() {}
 
@@ -19,5 +21,6 @@ public class TaskDTO {
         this.id = task.getId();
         this.title = task.getTitle();
         this.description = task.getDescription();
+        this.status = task.getStatus();
     }
 }

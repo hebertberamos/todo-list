@@ -43,6 +43,9 @@ public class TaskService {
 
             // Save the new task with the found users
             retEntity = new Task(requestBody.getTitle(), requestBody.getDescription(), user);
+
+            System.out.println(retEntity.getStatus());
+
             repository.save(retEntity);
 
             return new TaskDTO(retEntity);
@@ -59,6 +62,7 @@ public class TaskService {
 
             editTask.setTitle(dto.getTitle());
             editTask.setDescription(dto.getDescription());
+            editTask.setStatus(dto.getStatus());
 
             repository.save(editTask);
 
