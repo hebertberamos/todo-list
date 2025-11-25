@@ -35,7 +35,6 @@ const TasksList = () => {
         const data = await getAllTasks();
         setTasks(data); // Update state with data
       } catch (err) {
-        dw;
         setError(err.message); // Capture error
       } finally {
         setIsLoading(false); // Stop loading spinner regardless of outcome
