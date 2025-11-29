@@ -23,7 +23,13 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // To disable this csrf configuration and front can send request to this service
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().authenticated())
+                        .requestMatchers("/login").permitAll() // Allow full access to login
+                        .anyRequest().authenticated()
+                )
+                .formLogin(form -> form
+                        .successHandler((req, resp, auth) -> resp.setStatus(200))
+                        .failureHandler((req, resp, auth) -> resp.setStatus(401))
+                )
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
