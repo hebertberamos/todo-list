@@ -1,10 +1,8 @@
 package com.personal.todolist.controllers;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import com.personal.todolist.entitites.dtos.TaskDTO;
 import com.personal.todolist.servicies.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
