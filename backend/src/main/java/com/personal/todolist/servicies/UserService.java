@@ -8,6 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -36,4 +39,30 @@ public class UserService {
         return dto;
     }
 
+    public Collection<UserDTO> allUsers() {
+        Collection<User> users = repository.findAll();
+        Collection<UserDTO> usersDto = new ArrayList<>();
+
+        for(User user : users) {
+            usersDto.add(new UserDTO(user.getName(), user.getEmail(), user.getPassword(), user.getRole(), user.getTasks()));
+        }
+
+        return usersDto;
+    }
+
+    public User findByLogin(String login) {
+        User user = null;
+
+        try {
+            user = repository.findByEmail(login);
+            if(user == null) {
+                throw new RuntimeException("Null user in findByLogin method.");
+            }
+
+        } catch(Exception e) {
+            System.out.println("Error in UserService - findByLogin: " + e);
+        }
+
+        return user;
+    }
 }
