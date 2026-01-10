@@ -3,11 +3,12 @@ package com.personal.todolist.servicies;
 import com.personal.todolist.entitites.Task;
 import com.personal.todolist.entitites.User;
 import com.personal.todolist.entitites.dtos.TaskDTO;
+import com.personal.todolist.entitites.enums.UserRole;
+import com.personal.todolist.exceptions.ResourcesNotFoundException;
+import com.personal.todolist.exceptions.UnauthorizedException;
 import com.personal.todolist.repositories.TaskRepository;
-import com.personal.todolist.repositories.UserRepository;
+import com.personal.todolist.security.SecurityService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.expression.ExpressionException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,11 +19,13 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository repository;
-    private final UserRepository userRepository;
+    private final SecurityService securityService;
 
     // Get all tasks
     public List<TaskDTO> getAll() {
-        List<Task> tasks = repository.findAll();
+        User user = securityService.getAuthenticatedUser();
+
+        List<Task> tasks = user.getRole() == UserRole.USER ? repository.findByUser(user) : repository.findAll();
         List<TaskDTO> dtos =  new ArrayList<>();
 
         for(Task task : tasks) {
@@ -35,52 +38,44 @@ public class TaskService {
 
     // Add task
     public TaskDTO addNewTask(TaskDTO requestBody) {
-        Task retEntity = null;
-        try {
-            // Find user in database and instantiate it
-            //      So far, all tasks will be added to the same user ever.
-            User user = userRepository.findById(1L).orElseThrow(() -> new ExpressionException("User not found"));
+        User user = securityService.getAuthenticatedUser();
+        Task retEntity = new Task(requestBody.getTitle(), requestBody.getDescription(), user);
+        repository.save(retEntity);
 
-            // Save the new task with the found users
-            retEntity = new Task(requestBody.getTitle(), requestBody.getDescription(), user);
-
-            System.out.println(retEntity.getStatus());
-
-            repository.save(retEntity);
-
-            return new TaskDTO(retEntity);
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
-        }
+        return new TaskDTO(retEntity);
     }
 
     // Update task
     public TaskDTO update(Long id, TaskDTO dto) {
-        try {
-            Task editTask = repository.findById(id).orElseThrow(() -> new Exception("Error to get task by this id"));
+        User authUser = securityService.getAuthenticatedUser();
 
-            editTask.setTitle(dto.getTitle());
-            editTask.setDescription(dto.getDescription());
-            editTask.setStatus(dto.getStatus());
+        Task editTask = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("Error to get task by this id"));
 
-            repository.save(editTask);
-
-            return new TaskDTO(editTask);
-        } catch (Exception e) {
-            System.out.println(e);
-            return null;
+        //Check if the task being edited belongs to the user who is editing it.
+        if(editTask.getUser() != authUser) {
+            throw new UnauthorizedException("This user haven't right authentication to complete this request.");
         }
+
+        editTask.setTitle(dto.getTitle());
+        editTask.setDescription(dto.getDescription());
+        editTask.setStatus(dto.getStatus());
+
+        repository.save(editTask);
+
+        return new TaskDTO(editTask);
     }
 
     // Delete task
-    public ResponseEntity<?> delete(Long id) {
-        if(!repository.existsById(id)){
-            return ResponseEntity.notFound().build();
+    public void delete(Long id) {
+        User authUser = securityService.getAuthenticatedUser();
+        Task deleteTask = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("Error to find task"));
+
+        //Check if the task being edited belongs to the user who is editing it. Or if the user that is doing it have the role ADMIN
+        if(deleteTask.getUser() != authUser || authUser.getRole() != UserRole.ADMIN) {
+            throw new UnauthorizedException("");
         }
 
         repository.deleteById(id);
-        return ResponseEntity.noContent().build();
     }
 
 }
