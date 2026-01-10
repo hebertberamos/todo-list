@@ -3,6 +3,7 @@ package com.personal.todolist.servicies;
 import com.personal.todolist.entitites.User;
 import com.personal.todolist.entitites.dtos.UserDTO;
 import com.personal.todolist.entitites.enums.UserRole;
+import com.personal.todolist.exceptions.FatalErrorException;
 import com.personal.todolist.exceptions.ResourcesNotFoundException;
 import com.personal.todolist.exceptions.UnauthorizedException;
 import com.personal.todolist.mappers.UserMapper;
@@ -59,11 +60,8 @@ public class UserService {
     }
 
     public User findByLogin(String login) {
-        User authUser = securityService.getAuthenticatedUser();
-
-        if(authUser.getRole() != UserRole.ADMIN) {
-            throw new UnauthorizedException("Sorry, you haven't authorization complete this request");
-        }
+        if(login == null)
+            throw new FatalErrorException("Missing login parameter value to continue the execution.");
 
         return repository.findByEmail(login).orElseThrow(() -> new ResourcesNotFoundException("User not found"));
     }
