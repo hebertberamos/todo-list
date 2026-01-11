@@ -19,4 +19,25 @@ export const loginService = async (username, password) => {
     }
 
     return true;
-;}
+};
+
+export const registerService = async (name, email, password) => { 
+    const response = await fetch(`${API_URL}/auth`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email,
+            password: password
+        }),
+        credentials: 'include' 
+    });
+
+    if (response.status !== 200 && response.status !== 201) {
+        throw new Error('Falha ao tentar registrar o usuário.');
+    }
+
+    return true;
+}

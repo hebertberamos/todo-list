@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { loginService } from '../services/AuthService';
 
-const Login = ({ onLoginSuccess }) => {
+const Login = ({ onLoginSuccess, onGoToRegister }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
@@ -41,6 +41,17 @@ const Login = ({ onLoginSuccess }) => {
                 </div>
                 <button type="submit">Sign In</button>
             </form>
+
+            <p style={{ marginTop: '15px' }}>
+                Don't have an account? 
+                {/* When the link is clicked, call the function passed from App.jsx */}
+                <a href="#" onClick={(e) => {
+                    e.preventDefault(); // Prevents the browser from navigating/reloading
+                    onGoToRegister(); // Calls setCurrentView(VIEWS.REGISTER) in App.jsx
+                }}>
+                    Register here
+                </a>
+            </p>
         </div>
   )
 }

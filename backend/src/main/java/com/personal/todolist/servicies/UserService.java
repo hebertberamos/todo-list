@@ -53,7 +53,7 @@ public class UserService {
         Collection<UserDTO> usersDto = new ArrayList<>();
 
         for(User user : users) {
-            usersDto.add(new UserDTO(user.getName(), user.getEmail(), user.getPassword(), user.getRole(), user.getTasks()));
+            usersDto.add(new UserDTO(user.getName(), user.getEmail(), user.getPassword(), user.getRole()));
         }
 
         return usersDto;

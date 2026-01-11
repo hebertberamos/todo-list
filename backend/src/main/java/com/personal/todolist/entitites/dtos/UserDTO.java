@@ -18,15 +18,10 @@ public class UserDTO {
     private UserRole role;
     private List<Task> tasks = new ArrayList<>();
 
-    public UserDTO(String name, String email, String password, UserRole role, List<Task> tasks) {
+    public UserDTO(String name, String email, String password, UserRole role) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
-
-        if(!tasks.isEmpty()) {
-            this.tasks.addAll(tasks);
-        }
-
     }
 }
