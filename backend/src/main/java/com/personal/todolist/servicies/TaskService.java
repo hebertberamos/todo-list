@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -71,8 +72,8 @@ public class TaskService {
         Task deleteTask = repository.findById(id).orElseThrow(() -> new ResourcesNotFoundException("Error to find task"));
 
         //Check if the task being edited belongs to the user who is editing it. Or if the user that is doing it have the role ADMIN
-        if(deleteTask.getUser() != authUser || authUser.getRole() != UserRole.ADMIN) {
-            throw new UnauthorizedException("");
+        if(deleteTask.getUser().getEmail() != authUser.getEmail() && authUser.getRole() != UserRole.ADMIN) {
+            throw new UnauthorizedException("Unauthorized error - you haven't permission to do this!");
         }
 
         repository.deleteById(id);
