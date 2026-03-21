@@ -110,84 +110,90 @@ const TasksList = () => {
   };
 
   // RENDER: The UI logic based on the state
-  if (isLoading) return <p>Loading tasks...</p>;
-  if (error) return <p style={{ color: "red" }}>Error: {error}</p>;
+  if (isLoading) return <div className="login-rectangle-bg"><div className="login-body"><div className="login-title">Carregando tarefas...</div></div></div>;
+  if (error) return <div className="login-rectangle-bg"><div className="login-body"><div className="login-error">Erro: {error}</div></div></div>;
 
   return (
-    <div className="tasks-main-container">
-      <h2>Task List</h2>
-
-      <NewTaskForm onTaskCreated={handleAddTask} />
-
-      <ul>
-        {tasks.map((task) => (
-          <div
-            className="task-card"
-            key={task.id}
-            style={{ borderLeft: `5px solid ${getStatusColor(task.status)}` }}
-          >
-            {editingId === task.id ? (
-              /* --- EDIT MODE --- */
-              <div className="edit-mode">
-                <input
-                  type="text"
-                  value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
-                />
-                <input
-                  type="text"
-                  value={editDescription}
-                  onChange={(e) => setEditDescription(e.target.value)}
-                />
-
-                {/* DROPDOWN FOR ENUM */}
-                <select
-                  value={editStatus}
-                  onChange={(e) => setEditStatus(e.target.value)}
-                  style={{ marginLeft: "10px" }}
-                >
-                  <option value="TODO">To Do</option>
-                  <option value="DOING">Doing</option>
-                  <option value="DONE">Done</option>
-                </select>
-
-                <div style={{ marginTop: "10px" }}>
-                  <button onClick={() => saveEdit(task.id)}>Save</button>
-                  <button onClick={cancelEditing}>Cancel</button>
-                </div>
+    <div className="login-rectangle-bg">
+      <div className="login-body">
+        <div className="login-title">Lista de Tarefas</div>
+        <NewTaskForm onTaskCreated={handleAddTask} />
+        <ul style={{ width: '100%', padding: 0, margin: 0, listStyle: 'none' }}>
+          {tasks.map((task) => (
+            <li key={task.id} style={{ width: '100%' }}>
+              <div
+                className="task-card login-task-card"
+                style={{ borderLeft: `5px solid ${getStatusColor(task.status)}` }}
+              >
+                {editingId === task.id ? (
+                  <div className="edit-mode">
+                    <input
+                      className="login-input"
+                      type="text"
+                      value={editTitle}
+                      onChange={(e) => setEditTitle(e.target.value)}
+                      placeholder="Título"
+                      style={{ marginBottom: 8 }}
+                    />
+                    <input
+                      className="login-input"
+                      type="text"
+                      value={editDescription}
+                      onChange={(e) => setEditDescription(e.target.value)}
+                      placeholder="Descrição"
+                      style={{ marginBottom: 8 }}
+                    />
+                    <select
+                      className="login-input"
+                      value={editStatus}
+                      onChange={(e) => setEditStatus(e.target.value)}
+                      style={{ marginBottom: 8 }}
+                    >
+                      <option value="TODO">To Do</option>
+                      <option value="DOING">Doing</option>
+                      <option value="DONE">Done</option>
+                    </select>
+                    <div style={{ marginTop: '10px', display: 'flex', gap: '8px' }}>
+                      <button className="login-btn" type="button" onClick={() => saveEdit(task.id)}>
+                        <span className="login-btn-text">Salvar</span>
+                      </button>
+                      <button className="login-btn" type="button" onClick={cancelEditing} style={{ background: '#bbb', color: '#000' }}>
+                        <span className="login-btn-text" style={{ color: '#000' }}>Cancelar</span>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="view-mode">
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <h3 style={{ margin: 0, color: '#000' }}>{task.title}</h3>
+                      <span
+                        className="login-task-status"
+                        style={{ backgroundColor: getStatusColor(task.status) }}
+                      >
+                        {task.status}
+                      </span>
+                    </div>
+                    <p style={{ color: '#222', margin: '8px 0 16px 0' }}>{task.description}</p>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <button className="login-btn" type="button" onClick={() => startEditing(task)}>
+                        <span className="login-btn-text">Editar</span>
+                      </button>
+                      <button
+                        className="login-btn"
+                        type="button"
+                        onClick={() => handleDelete(task.id)}
+                        style={{ background: '#fff', color: 'red', border: '1px solid #d32f2f' }}
+                      >
+                        <span className="login-btn-text" style={{ color: 'red' }}>Deletar</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
-            ) : (
-              /* --- VIEW MODE --- */
-              <div className="view-mode">
-                <h3>{task.title}</h3>
-
-                {/* Display Status Badge */}
-                <span
-                  style={{
-                    backgroundColor: getStatusColor(task.status),
-                    color: "white",
-                    padding: "2px 8px",
-                    borderRadius: "4px",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  {task.status}
-                </span>
-
-                <p>{task.description}</p>
-
-                <button onClick={() => startEditing(task)}>Edit</button>
-                <button
-                  onClick={() => handleDelete(task.id)}
-                  style={{ marginLeft: "10px", color: "red" }}
-                >
-                  Delete
-                </button>
-              </div>
-            )}
-          </div>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

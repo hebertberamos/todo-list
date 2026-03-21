@@ -16,7 +16,6 @@ const NewTaskForm = ({ onTaskCreated }) => {
 
   return (
     <div className="task-form-container">
-      <h1>New task</h1>
       <div className="task-form">
         <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
           <input

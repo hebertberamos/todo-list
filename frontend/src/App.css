@@ -1,3 +1,217 @@
+.login-task-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 24px 24px 16px 16px;
+  margin-bottom: 18px;
+  color: #000;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-task-card:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+.login-task-status {
+  color: #fff;
+  padding: 2px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-left: 8px;
+  min-width: 60px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+/* --- Login Page Styles (Figma Spec) --- */
+.login-rectangle-bg {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  min-width: 100vw;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-body {
+  position: relative;
+  width: 500px;
+  height: 621px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 48px 0 0 0;
+}
+
+.login-title {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 33px;
+  line-height: 43px;
+  color: #000;
+  margin-bottom: 32px;
+  white-space: nowrap;
+  width: auto;
+  height: auto;
+}
+
+.login-error {
+  color: #d32f2f;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.login-form {
+  padding-top: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.login-label {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 27px;
+  color: #707070;
+  margin-bottom: 0px;
+  margin-top: 12px;
+}
+
+.login-input-group {
+  width: 100%;
+  position: relative;
+  margin-bottom: 0px;
+}
+
+.login-input {
+  width: 100%;
+  height: 39px;
+  border: none;
+  font-size: 16px;
+  background: transparent;
+  outline: none;
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  color: #000;
+  padding: 0 0 0 0;
+}
+
+.login-line {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0px;
+  border-bottom: 1px solid #D8D8D8;
+}
+
+
+
+.login-remember-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login-checkbox {
+  width: 16.1px;
+  height: 17.17px;
+  border: 1px solid #707070;
+  border-radius: 2px;
+  accent-color: #707070;
+}
+
+.login-remember-text {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  color: #000;
+}
+
+.login-forgot {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: 16px;
+  color: #000;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.login-btn {
+  width: 100%;
+  height: 53px;
+  background: #000;
+  border: 1px solid #fff;
+  border-radius: 4px;
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.login-btn:hover {
+  background: #222;
+}
+
+.login-btn-text {
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  color: #fff;
+}
+
+.login-switch {
+  width: 100%;
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.login-switch-bg {
+  width: 500px;
+  height: 60px;
+  background: #EFEFEF;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  box-sizing: border-box;
+  padding: 5px 8px;
+  gap: 8px;
+}
+
+.login-switch-option {
+  width: 236px;
+  height: 50px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+  font-size: 20px;
+  color: #000;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.login-switch-active {
+  background: #fff;
+  box-shadow: 1px 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
 body {
   background: linear-gradient(135deg, #5f5f5f 0%, #414345 100%);
   font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
@@ -40,9 +254,9 @@ h2 {
 .task-form-container {
   margin-bottom: 32px;
   padding: 24px;
-  border: 1px solid #929292;
+  border: 1px solid #c2c2c2;
   border-radius: 16px;
-  background: rgba(55, 72, 98, 0.35);
+  background: rgba(207, 226, 255, 0.35);
   backdrop-filter: blur(8px);
 }
 
@@ -53,29 +267,29 @@ h2 {
   margin: 8px 0;
   width: 45%;
   font-size: 1rem;
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #000000;
+  /* outline: none; */
 }
 
 .task-form input::placeholder {
-  color: #bbb;
+  color: #242424;
 }
 
 .task-form button {
-  background: #00c6ff;
-  background: linear-gradient(90deg, #0072ff 0%, #00c6ff 100%);
+  background: #000000;
+  /* background: linear-gradient(90deg, #6b6c6e 0%, #000000 100%); */
   color: #fff;
   border: none;
   border-radius: 8px;
   padding: 12px 24px;
   font-size: 1rem;
   cursor: pointer;
-  margin-left: 8px;
 }
 
 .task-form button:hover {
-  background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+  background:#232323;
+  /* background: linear-gradient(90deg, #9a9a9a 0%, #cbcbcb 100%); */
 }
 
 .task-card {
